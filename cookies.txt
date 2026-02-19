@@ -1,0 +1,7 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+www.eezysong.com	TRUE	/	FALSE	1999999999	sec-fetch-unsupported	1
+www.eezysong.com	TRUE	/	FALSE	1999999999	ssr-caching	cache#desc=miss#varnish=miss_miss#dc#desc=fastly_sea1_g
+www.eezysong.com	TRUE	/	FALSE	1999999999	XSRF-TOKEN	1771528270|laOT6-T6SKrm
+www.eezysong.com	TRUE	/	FALSE	1999999999	SameSite	None
+

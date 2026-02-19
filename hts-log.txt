@@ -1,0 +1,27 @@
+HTTrack3.49-2+htsswf+htsjava launched on Thu, 19 Feb 2026 11:10:57 at https://www.eezysong.com/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar +*.wixstatic.com/*
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://www.eezysong.com/ -O1 "C:\Users\kelly\Documents\Projects\eezysong-www\EezySong" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar +*.wixstatic.com/* )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+11:11:15	Error: 	"Not Found" (404) at link https://www.eezysong.com/t (from https://www.eezysong.com/)
+11:11:15	Error: 	"Not Found" (404) at link https://www.eezysong.com/e (from https://www.eezysong.com/)
+11:11:34	Error: 	"Forbidden" (403) at link https://static.wixstatic.com/media/ (from https://www.eezysong.com/)
+11:11:34	Error: 	"Bad Request" (400) at link https://www.eezysong.com/window.location.href (from https://www.eezysong.com/)
+11:11:34	Error: 	"Forbidden" (403) at link https://static.wixstatic.com/media (from https://www.eezysong.com/)
+11:11:34	Error: 	Unable to save file C:/Users/kelly/Documents/Projects/eezysong-www/EezySong/static.wixstatic.com/media: Permission denied
+11:11:34	Error: 	"Forbidden" (403) at link https://static.wixstatic.com/ (from https://www.eezysong.com/)
+11:11:34	Warning: 	Moved Permanently for https://www.eezysong.com/api/
+11:11:34	Warning: 	File has moved from https://www.eezysong.com/api/ to https://www.eezysong.com/api
+11:11:34	Warning: 	Moved Permanently for https://www.eezysong.com/envelope/
+11:11:34	Warning: 	File has moved from https://www.eezysong.com/envelope/ to https://www.eezysong.com/envelope
+11:11:35	Error: 	"Not Found" (404) at link https://www.eezysong.com/feed.xml (from https://www.eezysong.com/)
+11:11:35	Error: 	"Bad Request" (400) at link https://www.eezysong.com/decodeURIComponent(e (from https://www.eezysong.com/)
+11:11:35	Error: 	"Not Found" (404) at link https://www.eezysong.com/media/emptystate.85a4add5.svg (from https://www.eezysong.com/bamboocheeseboard)
+11:11:35	Error: 	"Not Found" (404) at link https://www.eezysong.com/api (from https://www.eezysong.com/api/)
+11:11:35	Error: 	"Not Found" (404) at link https://www.eezysong.com/envelope (from https://www.eezysong.com/envelope/)
+
+HTTrack Website Copier/3.49-2 mirror complete in 38 seconds : 110 links scanned, 95 files written (11972189 bytes overall) [6898291 bytes received at 181533 bytes/sec], 6977742 bytes transferred using HTTP compression in 33 files, ratio 25%, 2.6 requests per connection
+(12 errors, 4 warnings, 0 messages)
