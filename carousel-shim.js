@@ -178,12 +178,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Toggle arrow visibility
+        // Toggle arrow visibility (always show for looping)
         if (prevArrowBtn) {
-            prevArrowBtn.style.display = currentIndex === 0 ? 'none' : 'flex';
+            prevArrowBtn.style.display = 'flex';
         }
         if (nextArrowBtn) {
-            nextArrowBtn.style.display = currentIndex === totalItems - 1 ? 'none' : 'flex';
+            nextArrowBtn.style.display = 'flex';
         }
 
         // Sync Thumbnails if present
@@ -192,19 +192,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (nextArrowBtn) {
         nextArrowBtn.addEventListener('click', () => {
-            if (currentIndex < totalItems - 1) {
-                currentIndex++;
-                updateCarousel();
-            }
+            currentIndex = (currentIndex + 1) % totalItems;
+            updateCarousel();
         });
     }
 
     if (prevArrowBtn) {
         prevArrowBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarousel();
-            }
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+            updateCarousel();
         });
     }
 
