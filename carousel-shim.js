@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         prevArrowBtn.setAttribute('data-hook', 'nav-arrow-prev');
         prevArrowBtn.setAttribute('aria-label', 'Previous Item');
         // Mirror the SVG or replace it for "Back"
-        prevArrowBtn.style.left = 'calc(50% + 0px - 19.5px - 450px + 10px)';
+        prevArrowBtn.style.left = '23px';
         prevArrowBtn.style.right = 'auto'; // ensure right is auto
         // The next arrow has right positioning, prev should have left
 
