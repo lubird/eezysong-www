@@ -1,26 +1,72 @@
 (() => {
-  const GALLERY_ROOT_ID = "pro-gallery-comp-l4etlpk6";
-  const SCROLL_ID = "gallery-horizontal-scroll-comp-l4etlpk6";
   const WARMUP_ID = "wix-warmup-data";
 
-  const ITEM_IMAGE_MAP = {
-    "3b13f749-53fd-4117-893d-d26284632a85":
-      "img/picnic_full_10fd776949344418b11bf59cfd6a1b36_mv2.jpg",
-    "cbc1b30d-99fa-459e-ad86-ecda9c2921a7":
-      "img/picnic_full_3ac7814d8c5d497699f0e3ada9bd4a47_mv2.jpg",
-    "02eff9dc-2c6d-48d3-b7c9-b252424b230b":
-      "img/picnic_full_3e237e9ad30541169e12b79934c7b01b_mv2.jpg",
-    "534e10df-5fd8-4531-b3fc-d3c603422958":
-      "img/picnic_full_526180a5fceb4026b8abc09f3958829c_mv2.jpg",
-    "09ce980e-c9a4-497a-8bf8-ddcf33a78a6f":
-      "img/picnic_full_b0d6e0ea083a45e6a3c6ccc3ccc2152c_mv2.jpg",
+  const PAGE_CONFIG = {
+    "/bamboocheeseboard.html": {
+      galleryRootId: "pro-gallery-comp-l4etm7h21",
+      scrollId: "gallery-horizontal-scroll-comp-l4etm7h21",
+      warmupGalleryKey: "comp-l4etm7h21_galleryData",
+      itemImageMap: {
+        "aa4c7ff4-b2da-40ab-8861-b77119952020":
+          "img/269ff931a249_0d45d0_08057b3b5baf4d2086c993a19843fde6_mv2.jpg",
+        "1155bb16-1d10-41d4-a030-77dedd7f4401":
+          "img/78547ea89c20_0d45d0_9144a3aaf99747a7b0feb8433adf163f_mv2.34.de",
+        "f14e846b-002f-404d-bf7a-ab81fdf017a0":
+          "img/3305c833eba1_0d45d0_07330a4d67f84a9ba43a6e7dbc27c61e_mv2.jpg",
+        "744ac4eb-6396-4b98-b86f-4068d1cd07c1":
+          "img/eb2c2a09d0bd_0d45d0_fbde8e811b0d4297943302e6170ceaa1_mv2.jpg",
+      },
+    },
+    "/picnicbasketset.html": {
+      galleryRootId: "pro-gallery-comp-l4etlpk6",
+      scrollId: "gallery-horizontal-scroll-comp-l4etlpk6",
+      warmupGalleryKey: "comp-l4etlpk6_galleryData",
+      itemImageMap: {
+        "3b13f749-53fd-4117-893d-d26284632a85":
+          "img/picnic_full_10fd776949344418b11bf59cfd6a1b36_mv2.jpg",
+        "cbc1b30d-99fa-459e-ad86-ecda9c2921a7":
+          "img/picnic_full_3ac7814d8c5d497699f0e3ada9bd4a47_mv2.jpg",
+        "02eff9dc-2c6d-48d3-b7c9-b252424b230b":
+          "img/picnic_full_3e237e9ad30541169e12b79934c7b01b_mv2.jpg",
+        "534e10df-5fd8-4531-b3fc-d3c603422958":
+          "img/picnic_full_526180a5fceb4026b8abc09f3958829c_mv2.jpg",
+        "09ce980e-c9a4-497a-8bf8-ddcf33a78a6f":
+          "img/picnic_full_b0d6e0ea083a45e6a3c6ccc3ccc2152c_mv2.jpg",
+      },
+    },
   };
 
-  const onReady = () => {
-    const galleryRoot = document.getElementById(GALLERY_ROOT_ID);
+  const normalizePathname = (pathname) => {
+    let normalized = (pathname || "/").split("?")[0].split("#")[0];
+    if (!normalized.startsWith("/")) normalized = `/${normalized}`;
+    normalized = normalized.replace(/\/+/g, "/");
+    if (normalized.length > 1 && normalized.endsWith("/")) {
+      normalized = normalized.slice(0, -1);
+    }
+    if (normalized === "") normalized = "/";
+    const lastSegment = normalized.split("/").pop() || "";
+    if (lastSegment && !lastSegment.includes(".")) {
+      normalized = `${normalized}.html`;
+    }
+    return normalized.toLowerCase();
+  };
+
+  const resolvePageConfig = () => {
+    const normalized = normalizePathname(window.location.pathname || "/");
+    if (PAGE_CONFIG[normalized]) return PAGE_CONFIG[normalized];
+
+    const segments = normalized.split("/");
+    const lastSegment = segments[segments.length - 1] || "";
+    const baseName = lastSegment.replace(/\.html$/, "");
+    const canonicalPath = `/${baseName}.html`;
+    return PAGE_CONFIG[canonicalPath] || null;
+  };
+
+  const initCarousel = (config) => {
+    const galleryRoot = document.getElementById(config.galleryRootId);
     if (!galleryRoot) return;
 
-    const scrollContainer = document.getElementById(SCROLL_ID);
+    const scrollContainer = document.getElementById(config.scrollId);
     const scrollInner = scrollContainer?.querySelector(".gallery-horizontal-scroll-inner");
     if (!scrollContainer || !scrollInner) return;
 
@@ -31,11 +77,9 @@
         const warmupData = JSON.parse(warmupScript.textContent || "{}");
         const appsWarmupData = warmupData?.appsWarmupData || {};
         const appId = Object.keys(appsWarmupData).find((key) =>
-          Boolean(appsWarmupData[key]?.["comp-l4etlpk6_galleryData"]?.items)
+          Boolean(appsWarmupData[key]?.[config.warmupGalleryKey]?.items)
         );
-        warmupItems = appId
-          ? appsWarmupData[appId]["comp-l4etlpk6_galleryData"].items || []
-          : [];
+        warmupItems = appId ? appsWarmupData[appId][config.warmupGalleryKey].items || [] : [];
       } catch (_) {
         warmupItems = [];
       }
@@ -62,11 +106,9 @@
       return match ? match[2] : "";
     };
 
-    const getItemAt = (index) => warmupItems[index] || null;
-
     const normalizeGroup = (group, index, options = {}) => {
       const { preserveExistingSrc = false } = options;
-      const item = getItemAt(index);
+      const item = warmupItems[index] || null;
       const itemId = item?.itemId || `archive-item-${index}`;
       const normalizedId = itemId.replace(/-/g, "");
       const leftPos = index * itemWidth;
@@ -121,7 +163,7 @@
         img.style.height = `${itemHeight}px`;
         img.alt = item?.metaData?.alt || img.alt || "";
 
-        const mappedSrc = ITEM_IMAGE_MAP[itemId];
+        const mappedSrc = config.itemImageMap[itemId];
         const thumbSrc = getThumbUrl(index);
         let resolvedSrc = existingSrc;
         if (mappedSrc) {
@@ -178,9 +220,7 @@
     }
 
     const thumbnailBar = galleryRoot.querySelector(".thumbnails-gallery .galleryColumn");
-    const allThumbs = () =>
-      Array.from(thumbnailBar?.querySelectorAll(".thumbnailItem") || []);
-
+    const allThumbs = () => Array.from(thumbnailBar?.querySelectorAll(".thumbnailItem") || []);
     let currentIndex = 0;
 
     const render = () => {
@@ -190,11 +230,13 @@
       });
 
       allGroupViews.forEach((group, idx) => {
-        group.setAttribute("aria-hidden", idx === currentIndex ? "false" : "true");
+        const active = idx === currentIndex;
+        group.setAttribute("aria-hidden", active ? "false" : "true");
       });
 
       allContainers.forEach((container, idx) => {
-        container.setAttribute("aria-hidden", idx === currentIndex ? "false" : "true");
+        const active = idx === currentIndex;
+        container.setAttribute("aria-hidden", active ? "false" : "true");
       });
 
       allActions.forEach((action, idx) => {
@@ -235,6 +277,12 @@
     });
 
     render();
+  };
+
+  const onReady = () => {
+    const config = resolvePageConfig();
+    if (!config) return;
+    initCarousel(config);
   };
 
   if (document.readyState === "loading") {
